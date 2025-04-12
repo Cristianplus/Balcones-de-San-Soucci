@@ -1,1 +1,48 @@
 // Panel de residente / administrador
+
+<?php
+session_start();
+
+//Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Incluir la conexión a la base de datos
+include 'includes/db.php';
+
+// Obtener datos de la sesión
+$nombre = $_SESSION['nombre'];
+$rol = $_SESSION['rol'];
+
+?>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UFT-8">
+        <title>Dashboard - Condominio Balcones de San Soucci</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <h1>Bienvenido, <?php echo htmlspecialchars($nombre); ?>!</h1>
+        <h3>Rol: <?php echo htmlspecialchars(ucfirst($rol)); ?></h3>
+
+        <?php if ($rol === "administrador"): ?>
+            <h2>Panel de Administrador</h2>
+            <ul>
+                <li><a href="usuarios.php">Gestión de usuarios</a></li>
+                <li><a href="recibos.php">Gestión de recibos</a></li>
+                <li><a href="documentos.php">Gestión de documentos</a></li>
+            </ul>
+            <?php else: ?>
+                <h2>Panel de Residemte</h2>
+                <ul>
+                    <li><a href="recibos.php">Ver mis recibos</a></li>
+                    <li><a href="documentos.php">Ver documentos</a></li>
+                </ul>
+        <?php endif; ?>
+
+        <p><a href="logout.php">Cerrar sesión</a></p>
+    </body>
+</html>
