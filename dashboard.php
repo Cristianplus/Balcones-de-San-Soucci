@@ -1,5 +1,5 @@
 // Panel de residente / administrador
-
+<?php include 'includes/header.php'; ?>
 <?php
 session_start();
 
@@ -46,3 +46,4 @@ $rol = $_SESSION['rol'];
         <p><a href="logout.php">Cerrar sesión</a></p>
     </body>
 </html>
+<?php include 'includes/footer.php'; ?>

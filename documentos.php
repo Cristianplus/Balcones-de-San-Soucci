@@ -1,5 +1,5 @@
 // Gestión y visualización de documentos
-
+<?php include 'includes/header.php'; ?>
 <?php
 session_start();
 
@@ -75,3 +75,4 @@ $resultado = $stmt->get_result();
 $stmt->close();
 $stmt->close();
 ?>
+<?php include 'includes/footer.php'; ?>

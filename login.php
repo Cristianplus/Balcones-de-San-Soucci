@@ -1,5 +1,5 @@
 // Formulario de acceso
-
+<?php include("includes/header.php"); ?>
 <?php
 // Iniciar sesión
 session_start();
@@ -72,3 +72,4 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         <p><a href = "index.html">Volver al Inicio</a></p>
     </body>
 </html>
+<?php include("includes/footer.php"); ?>

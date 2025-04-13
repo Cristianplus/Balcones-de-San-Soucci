@@ -1,5 +1,5 @@
 // Gestión y vsualización de recibos
-
+<?php include 'includes/header.php'; ?>
 <?php
 session_start();
 
@@ -102,3 +102,4 @@ $resultado = $stmt->get_result();
 $stmt->close();
 $conn->close();
 ?>
+<?php include 'includes/footer.php'; ?>
