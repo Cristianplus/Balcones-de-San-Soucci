@@ -1,14 +1,13 @@
-// Conexión a la base de datos 
-
 <?php
 // Parámetros de conexión a la base de datos
 $host = "localhost";
 $usuario = "root";
-$contraseña = "";
+$contraseña = "cristian2910";
 $baseDeDatos = "condominio";
 
 // Crear conexión
 $conn = new mysqli($host, $usuario, $contraseña, $baseDeDatos);
+$conn->set_charset("utf8mb4");
 
 // Verificar la conexión
 if ($conn->connect_error) {
@@ -16,6 +15,6 @@ if ($conn->connect_error) {
 }
 
 // Configurar el conjunto de caracteres
-$conn->set_charset("uft8");
+$conn->set_charset("utf8");
 
 ?>

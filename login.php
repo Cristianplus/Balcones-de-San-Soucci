@@ -1,8 +1,10 @@
-// Formulario de acceso
-<?php include("includes/header.php"); ?>
+<?php include 'includes/header.php'; ?>
 <?php
 // Iniciar sesión
 session_start();
+
+// Incluir el encabezado
+include("includes/header.php");
 
 // Incluir la conexión a la base de datos
 include("includes/db.php");
@@ -14,6 +16,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
     // Preparar la consulta para evitar inyección SQL
     $stmt = $conn->prepare("SELECT id, nombre, rol, contraseña FROM usuarios WHERE correo = ?");
+    if (!$stmt) {
+        die("Error al preparar la consulta: " . $conn->error);
+    }
+    
     $stmt->bind_param("s", $correo);
     $stmt->execute();
     $resultado = $stmt->get_result();
@@ -26,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
             // Guardar los datos en la sesión
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['nombre'] = $usuario['nombre'];
-            $_SESSION['rol'] = $usuario['rol'];
+            $_SESSION['rol'] = $usuario['rol'];          
 
             // Redirigir según el rol del usuario
             if ($usuario['rol'] === 'administrador') {
@@ -46,10 +52,14 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 }
 ?>
 
+<?php
+header('Content-Type: text/html; charset=utf-8');
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <meta charset="UFT-8">
+        <meta charset="UTF-8">
         <title>Iniciar Sesión - Condominio Balcones de San Soucci</title>
         <link rel="stylesheet" href="css/styles.css">
     </head>
@@ -63,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         <form action = "login.php" method = "POST">
         <label for = "correo">Correo Electrónico:</label><br>
         <input type = "email" id = "correo" name = "correo" required><br><br>
-
+        <label for = "contraseña">Contraseña:</label><br>
         <input type = "password" id = "contraseña" name = "contraseña" required><br><br>
 
         <input type = "submit" value = "Ingresar">

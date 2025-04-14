@@ -1,5 +1,3 @@
-// Cabecera
-
 <?php
 // Iniciar sesión sí aún no se ha iniciado
 if (session_status() == PHP_SESSION_NONE) {
@@ -16,3 +14,4 @@ if (session_status() == PHP_SESSION_NONE) {
         <script src="js/scripts.js"></script>
     </head>
     <body>
+    

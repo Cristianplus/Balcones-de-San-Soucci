@@ -1,12 +1,12 @@
 // Scripts JS para interactividad
 
-document.addEventListener('DOMContentLoaded', fuction () {
+document.addEventListener('DOMContentLoaded', function () {
     console.log("JS cargado correctamente");
 
     // Mensaje de bienvenida
     const bienvenido = document.querySelector('.bienvenida');
     if (bienvenido) {
-        bienvenido.addEventListener('click', fuction () {
+        bienvenido.addEventListener('click', function () {
             alert("¡Bienvenido a la página del condominio!");
         });
     }

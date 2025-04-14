@@ -1,35 +1,17 @@
-// Gestión y visualización de documentos
 <?php include 'includes/header.php'; ?>
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
-}
+include 'includes/db.php';
 
-include 'include/db.php';
-
-$usuarioId = $_SESSION['usuario_id'];
-$rol = $_SESSION['rol'];
-
-// Consultar documentos según el rol del usuario
-if ($rol === 'administrador') { 
-    $sql = "SELECT d.id, u.nombre AS usuario, d.tipo, d.url
-            FROM documentos d
-            JOIN usuarios u ON d.usuario_id = u.id
-            ORDER BY d.id DESC";
-    $stmt = $conn->prepare($sql);
-} else {
-    $sql = "SELECT id, tipo, url
-            FROM documentos
-            WHERE usuario_id = ?
-            ORDER BY id DESC";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $usuarioId);
-}
-
+// Consultar todos los documentos sin restricciones por rol
+$sql = "SELECT id, tipo, url
+        FROM documentos
+        ORDER BY id DESC";
+$stmt = $conn->prepare($sql);
 $stmt->execute();
 $resultado = $stmt->get_result();
 ?>
@@ -37,33 +19,44 @@ $resultado = $stmt->get_result();
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF_8">
+    <meta charset="UTF-8">
     <title>Documentos - Condominio Balcones de San Soucci</title>
-    <link rel="stylesheet" href= "css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <h1>Documentos del Condominio</h1>
 
-    <table class="tabla.documentos">
-    <tr>
-        <?php if ($rol === 'administrador'): ?>
-            <th>Usuario</th>
-        <?php endif; ?>
-        <th>Tipo de documentos</th>
-        <th>Enlace</th>
-    </tr>
-
-    <?php while ($documento = $resultado->fetch_assoc()): ?>
+    <table class="tabla-documentos">
         <tr>
-            <?php if ($rol === 'administrador'): ?>
-                <td><?php echo htmlspecialchars($documento['usuario']); ?></td>
-            <?php endif; ?>
-            <td><?php echo ucfirst(str_replace('_', ' ', $documento['tipo'])); ?></td>
-            <td>
-                <a href="<?php echo htmlspecialchars($documento['url']); ?>" target="_blanck">Ver documento</a>
-            </td>
+            <th>Tipo de documento</th>
+            <th>Enlace</th>
         </tr>
-    <?php endwhile; ?>
+
+        <?php while ($documento = $resultado->fetch_assoc()): ?>
+            <?php
+            // Determinar la URL según el tipo de documento
+            switch ($documento['tipo']) {
+                case 'obra':
+                    $enlace = 'https://www.youtube.com';
+                    break;
+                case 'trasteo':
+                    $enlace = 'https://www.facebook.com';
+                    break;
+                case 'alquiler_area_social':
+                    $enlace = 'https://www.wikipedia.com';
+                    break;
+                default:
+                    $enlace = '#'; // Enlace por defecto si el tipo no coincide
+                    break;
+            }
+            ?>
+            <tr>
+                <td><?php echo ucfirst(str_replace('_', ' ', $documento['tipo'])); ?></td>
+                <td>
+                    <a href="<?php echo htmlspecialchars($enlace); ?>" target="_blank">Ver documento</a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
     </table>
 
     <p><a href="dashboard.php">Volver al panel</a></p>
@@ -73,6 +66,6 @@ $resultado = $stmt->get_result();
 <?php
 // Cerrar la conexión a la base de datos
 $stmt->close();
-$stmt->close();
+$conn->close();
 ?>
 <?php include 'includes/footer.php'; ?>

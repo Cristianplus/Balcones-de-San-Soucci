@@ -1,4 +1,3 @@
-// Panel de residente / administrador
 <?php include 'includes/header.php'; ?>
 <?php
 session_start();
@@ -25,25 +24,30 @@ $rol = $_SESSION['rol'];
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+    <div class="dashboard-container">
         <h1>Bienvenido, <?php echo htmlspecialchars($nombre); ?>!</h1>
         <h3>Rol: <?php echo htmlspecialchars(ucfirst($rol)); ?></h3>
 
         <?php if ($rol === "administrador"): ?>
             <h2>Panel de Administrador</h2>
+            <table class="dashboard-table">
             <ul>
                 <li><a href="usuarios.php">Gestión de usuarios</a></li>
                 <li><a href="recibos.php">Gestión de recibos</a></li>
                 <li><a href="documentos.php">Gestión de documentos</a></li>
+                <li><a href="solicitudes.php">Ver solicitudes</a></li>
             </ul>
             <?php else: ?>
-                <h2>Panel de Residemte</h2>
+                <h2>Panel de Residente</h2>
+                <table class="dashboard-table">
                 <ul>
                     <li><a href="recibos.php">Ver mis recibos</a></li>
                     <li><a href="documentos.php">Ver documentos</a></li>
+                    <li><a href="solicitudes.php">Enviar solicitud</a></li>
                 </ul>
         <?php endif; ?>
 
-        <p><a href="logout.php">Cerrar sesión</a></p>
+        <p><a href="logout.php" class="logout-button">Cerrar sesión</a></p>
     </body>
 </html>
 <?php include 'includes/footer.php'; ?>

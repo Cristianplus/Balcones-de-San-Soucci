@@ -1,5 +1,3 @@
-// Panel de Cerrar Sesión
-
 <?php
 // Iniciar sesión
 session_start();
