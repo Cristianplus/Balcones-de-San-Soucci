@@ -64,6 +64,12 @@ header('Content-Type: text/html; charset=utf-8');
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="img/logo.jpg" alt="Logo del Condominio">
+    </div>
+    
         <h2>Iniciar Sesión</h2>
 
         <?php if (!empty($error)): ?>
