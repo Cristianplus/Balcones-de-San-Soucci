@@ -63,7 +63,7 @@ $resultado = $stmt->get_result();
     <?php if ($rol !== 'administrador'): ?>
         <form method="POST" action="solicitudes.php">
             <label for="mensaje">Escribe tu solicitud:</label><br>
-            <textarea name="mensaje" id="mensaje" rows="4" cols="50" required></textarea><br>
+            <textarea name="mensaje" id="mensaje" rows="4" cols="40" required></textarea><br>
             <input type="submit" value="Enviar solicitud">
         </form>
         <hr>
