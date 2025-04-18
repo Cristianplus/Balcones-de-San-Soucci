@@ -14,8 +14,8 @@ include("includes/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
-    $numero_casa = $_POST['numero_casa'];
     $rol = $_POST['rol'];
+    $numero_casa = ($rol === 'administrador') ? null : $_POST['numero_casa']; // Si el rol es administrador, no se requiere número de casa
     $correo = $_POST['correo'];
     $contraseña = md5($_POST['contraseña']); // Encriptar la contraseña con MD5
 
@@ -51,11 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="form-group">
-            <label for="numero_casa">Número de Casa:</label>
-            <input type="text" name="numero_casa" id="numero_casa" required>
-        </div>
-
-        <div class="form-group">
             <label for="rol">Rol:</label>
             <select name="rol" id="rol" required>
                 <option value="administrador">Administrador</option>
@@ -63,8 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
         </div>
 
-        <div>
-            
+        <div class="form-group" id="grupo-numero-casa">
+            <label for="numero_casa">Número de Casa:</label>
+            <input type="text" name="numero_casa" id="numero_casa">
         </div>
 
         <div class="form-group">
@@ -82,5 +78,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </form>
     <p><a href="usuarios.php">Volver a la lista de usuarios</a></p>
+
+    <!-- Script para ocultar el campo "Número de Casa" si se selecciona "administrador" -->
+    <script>
+        const rolSelect = document.getElementById('rol');
+        const grupoNumeroCasa = document.getElementById('grupo-numero-casa');
+
+        function actualizarVisibilidad() {
+            if (rolSelect.value === 'administrador') {
+                grupoNumeroCasa.style.display = 'none';
+                document.getElementById('numero_casa').required = false;
+            } else {
+                grupoNumeroCasa.style.display = 'block';
+                document.getElementById('numero_casa').required = true;
+            }
+        }
+
+        rolSelect.addEventListener('change', actualizarVisibilidad);
+
+        // Llamamos a la función al cargar la página por si ya viene con un valor seleccionado
+        actualizarVisibilidad();
+    </script>
 </body>
 </html>

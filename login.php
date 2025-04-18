@@ -1,4 +1,3 @@
-<?php include 'includes/header.php'; ?>
 <?php
 // Iniciar sesión
 session_start();
@@ -64,12 +63,6 @@ header('Content-Type: text/html; charset=utf-8');
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-
-    <!-- Logo -->
-    <div class="logo-container">
-        <img src="img/logo.jpg" alt="Logo del Condominio">
-    </div>
-    
         <h2>Iniciar Sesión</h2>
 
         <?php if (!empty($error)): ?>
@@ -78,11 +71,12 @@ header('Content-Type: text/html; charset=utf-8');
 
         <form action = "login.php" method = "POST">
         <label for = "correo">Correo Electrónico:</label><br>
-        <input type = "email" id = "correo" name = "correo" required><br><br>
+        <input type = "email" id = "correo" name = "correo" class="campo-login" required>
         <label for = "contraseña">Contraseña:</label><br>
-        <input type = "password" id = "contraseña" name = "contraseña" required><br><br>
+        <input type = "password" id = "contraseña" name = "contraseña" class="campo-login" required><br><br>
 
-        <input type = "submit" value = "Ingresar">
+        <input type = "submit" value = "Ingresar" class="boton-login">
+
         </form>
 
         <p><a href = "index.html">Volver al Inicio</a></p>

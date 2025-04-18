@@ -37,13 +37,13 @@ $resultado = $stmt->get_result();
             // Determinar la URL según el tipo de documento
             switch ($documento['tipo']) {
                 case 'obra':
-                    $enlace = 'https://www.youtube.com';
+                    $enlace = 'https://drive.google.com/file/d/1m5RqNo9WOlTtv7g5Ailn_xs5t8EVEHif/view?usp=sharing';
                     break;
                 case 'trasteo':
-                    $enlace = 'https://www.facebook.com';
+                    $enlace = 'https://drive.google.com/drive/folders/1VtI47QJBUKViP-pLd_WITirnWZzz8x06?usp=sharing';
                     break;
                 case 'alquiler_area_social':
-                    $enlace = 'https://www.wikipedia.com';
+                    $enlace = 'https://drive.google.com/file/d/14vZMyR2oz7t7q5njJ-Kck4OpeqSXh6gV/view?usp=sharing';
                     break;
                 default:
                     $enlace = '#'; // Enlace por defecto si el tipo no coincide
