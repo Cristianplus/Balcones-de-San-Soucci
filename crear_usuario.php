@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <h2>Crear Usuario</h2>
-    <form action="crear_usuario.php" method="POST">
+    <form action="crear_usuario.php" method="POST" class="form-principal">
         <div class="form-group">
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" id="nombre" required>

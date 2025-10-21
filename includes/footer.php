@@ -1,5 +1,5 @@
 <footer>
-    <p>© 2025 Condominio Balcones de San Soucci - Trabajo de Grado</p>
+    <p>© 2025 Condominio Balcones de San Soucci</p>
 </footer>
 </body>
 </html>

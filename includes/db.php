@@ -2,7 +2,7 @@
 // Parámetros de conexión a la base de datos
 $host = "localhost";
 $usuario = "root";
-$contraseña = "";
+$contraseña = "cristian2910";
 $baseDeDatos = "condominio";
 
 // Crear conexión

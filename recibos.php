@@ -1,7 +1,6 @@
 <?php include 'includes/header.php'; ?>
 <?php
 
-session_start();
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['usuario_id'])) {
     header("Location: login.php");
@@ -83,10 +82,10 @@ $resultado = $stmt->get_result();
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Recibos de Administración</h1>
+    <h1 style="text-align: center;">Recibos de Administración</h1>
 
     <?php if ($rol === 'administrador'): ?>
-    <h2>Agregar Recibo</h2>
+    <h2 style="padding-left: 180px;">Agregar Recibo</h2>
     <form action="recibos.php" method="POST">
         <div class="form-group">
             <label for="usuario_id">Residente:</label>

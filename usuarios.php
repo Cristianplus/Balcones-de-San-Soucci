@@ -42,7 +42,7 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Número de Casa</th>
+                <th>Casa</th>
                 <th>Rol</th>
                 <th>Correo</th>
                 <th>Acciones</th>
@@ -53,12 +53,12 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
                 <tr>
                     <td><?php echo $usuario['id']; ?></td>
                     <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
-                    <td><?php echo htmlspecialchars($usuario['numero_casa']); ?></td>
+                    <td style="text-align: center;"><?php echo htmlspecialchars($usuario['numero_casa']); ?></td>
                     <td><?php echo $usuario['rol']; ?></td>
                     <td><?php echo htmlspecialchars($usuario['correo']); ?></td>
                     <td>
-                        <a href="editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="button">Editar</a>
-                        <a href="usuarios.php?eliminar=<?php echo $usuario['id']; ?>" class="button" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
+                        <a href="editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="button-user">Editar</a>
+                        <a href="usuarios.php?eliminar=<?php echo $usuario['id']; ?>" class="button-user" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
                     </td>
                 </tr>
             <?php endwhile; ?>

@@ -10,6 +10,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <head>
         <meta charset="UTF-8">
         <title>Condominio Balcones de San Soucci</title>
+        <link rel="icon" type="image/png" href="img/icon.png">
         <link rel="stylesheet" href="css/styles.css">
         <script src="js/scripts.js"></script>
     </head>

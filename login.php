@@ -63,13 +63,13 @@ header('Content-Type: text/html; charset=utf-8');
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-        <h2>Iniciar Sesión</h2>
+        <h2 style="padding-left: 180px;">Iniciar Sesión</h2>
 
         <?php if (!empty($error)): ?>
             <p styles = "color: red;"><?php echo $error; ?></p>
         <?php endif; ?>
 
-        <form action = "login.php" method = "POST">
+        <form action = "login.php" method = "POST" class="form-principal">
         <label for = "correo">Correo Electrónico:</label><br>
         <input type = "email" id = "correo" name = "correo" class="campo-login" required>
         <label for = "contraseña">Contraseña:</label><br>
