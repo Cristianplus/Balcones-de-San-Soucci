@@ -10,7 +10,7 @@
 /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #000000;
     color: #333;
     line-height: 1.6;
     padding: 20px;
@@ -34,6 +34,17 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.welcome-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Blanco con 90% de opacidad */
+    border: 1px solid #ddd;      /* Borde gris claro */
+    border-radius: 10px;         /* Bordes redondeados (opcional) */
+    padding: 20px;               /* Espaciado interno */
+    max-width: 600px;            /* Ancho máximo */
+    margin: 30px auto;           /* Centrar horizontalmente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    text-align: center;          /* Centrar el texto (opcional) */
 }
 
 /* Formulario */
