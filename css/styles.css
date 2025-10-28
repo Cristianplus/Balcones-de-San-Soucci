@@ -69,7 +69,7 @@ a:hover {
     width: auto;
     margin: auto;
     padding-left: 330px;
-}
+    text-align: center;}
 
 .btn-home {
     width: 30px;                    /* Ajusta tamaño del botón */
@@ -450,4 +450,16 @@ a.button-user:hover {
 
 .btn-eliminar:hover {
     background-color: #c82333;
+}
+
+footer {
+    position: fixed;      /* Lo fija en pantalla */
+    bottom: 0;            /* Lo ubica al fondo */
+    padding: 20px;              /* Pegado a la izquierda */
+    width: auto;          /* Solo ocupa lo necesario */
+    padding: 10px 20px;   /* Espaciado interno */
+    background: transparent; /* Fondo transparente, cámbialo si lo prefieres */
+    color: black;         /* Cambia según tu fondo */
+    font-size: 14px;
+    z-index: 1000;        /* Asegura que quede por encima del contenido */
 }
