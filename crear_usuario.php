@@ -1,9 +1,10 @@
 <?php
+include 'includes/header.php';
   error_reporting(E_ALL);
   ini_set('display_errors', 1);
 
 // Iniciar sesión y verificar si el usuario es administrador
-session_start();
+
 if ($_SESSION['rol'] !== 'administrador') {
     header("Location: login.php");
     exit;
@@ -40,11 +41,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Crear Usuario</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
 </head>
 <body>
-    <h2>Crear Usuario</h2>
-    <form action="crear_usuario.php" method="POST" class="form-principal">
+    <h1 style="padding-left: 130px";>Crear Usuario</h1>
+    <form action="crear_usuario.php" method="POST" class="welcome-container">
         <div class="form-group">
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" id="nombre" required>
@@ -77,7 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="submit" value="Crear Usuario">
         </div>
     </form>
-    <p><a href="usuarios.php">Volver a la lista de usuarios</a></p>
 
     <!-- Script para ocultar el campo "Número de Casa" si se selecciona "administrador" -->
     <script>

@@ -1,5 +1,6 @@
 <?php
-session_start();
+include 'includes/header.php';
+
 if (isset($_SESSION['mensaje_exito'])) {
     echo '<div class="mensaje-exito">' . $_SESSION['mensaje_exito'] . '</div>';
     unset($_SESSION['mensaje_exito']);
@@ -32,11 +33,11 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Usuarios</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
 </head>
 <body>
-    <h2>Gestión de Usuarios</h2>
-    <a href="crear_usuario.php" class="button">+ Crear nuevo usuario</a>
+    <h1 style="padding-left: 10px; padding-top: 20px;">Gestión de Usuarios</h1>
+    <a href="crear_usuario.php" class="button">+ Crear Usuario</a>
     <table class="tabla-recibos">
         <thead>
             <tr>
@@ -64,6 +65,6 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
             <?php endwhile; ?>
         </tbody>
     </table>
-    <p><a href="dashboard.php">← Volver al panel</a></p>
+
 </body>
 </html>

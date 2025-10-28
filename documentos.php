@@ -59,7 +59,6 @@ $resultado = $stmt->get_result();
         <?php endwhile; ?>
     </table>
 
-    <p><a href="dashboard.php">Volver al panel</a></p>
 </body>
 </html>
 

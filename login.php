@@ -1,12 +1,7 @@
 <?php
-// Iniciar sesión
 session_start();
-
-// Incluir el encabezado
-include("includes/header.php");
-
-// Incluir la conexión a la base de datos
 include("includes/db.php");
+include("includes/header.php"); // Solo añade el header visual aquí
 
 // Verificar sí se envió el formulario
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
@@ -57,29 +52,30 @@ header('Content-Type: text/html; charset=utf-8');
 
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <title>Iniciar Sesión - Condominio Balcones de San Soucci</title>
-        <link rel="stylesheet" href="css/styles.css">
-    </head>
-    <body>
-        <h2 style="padding-left: 180px;">Iniciar Sesión</h2>
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - Condominio Balcones de San Soucci</title>
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+</head>
+<body>
 
-        <?php if (!empty($error)): ?>
-            <p styles = "color: red;"><?php echo $error; ?></p>
-        <?php endif; ?>
+    <h2 style="padding-left: 330px; padding-top: 20px;">Iniciar Sesión</h2>
 
-        <form action = "login.php" method = "POST" class="form-principal">
-        <label for = "correo">Correo Electrónico:</label><br>
-        <input type = "email" id = "correo" name = "correo" class="campo-login" required>
-        <label for = "contraseña">Contraseña:</label><br>
-        <input type = "password" id = "contraseña" name = "contraseña" class="campo-login" required><br><br>
+    <?php if (!empty($error)): ?>
+        <p style="color: red;"><?php echo $error; ?></p>
+    <?php endif; ?>
 
-        <input type = "submit" value = "Ingresar" class="boton-login">
+    <form action="login.php" method="POST" class="form-principal">
+        <label for="correo">Correo Electrónico:</label><br>
+        <input type="email" id="correo" name="correo" class="campo-login" required>
 
-        </form>
+        <label for="contraseña">Contraseña:</label><br>
+        <input type="password" id="contraseña" name="contraseña" class="campo-login" required><br>
 
-        <p><a href = "index.html">Volver al Inicio</a></p>
-    </body>
+        <input type="submit" value="Ingresar" class="boton-login">
+    </form>
+
+</body>
 </html>
+<br><br><br>
 <?php include("includes/footer.php"); ?>

@@ -85,7 +85,8 @@ $resultado = $stmt->get_result();
     <h1 style="text-align: center;">Recibos de Administración</h1>
 
     <?php if ($rol === 'administrador'): ?>
-    <h2 style="padding-left: 180px;">Agregar Recibo</h2>
+    <h2 style="padding-left: 130px";>Agregar Recibo</h2>
+    <div class="welcome-container">
     <form action="recibos.php" method="POST">
         <div class="form-group">
             <label for="usuario_id">Residente:</label>
@@ -124,6 +125,8 @@ $resultado = $stmt->get_result();
             <input type="submit" value="Agregar Recibo">
         </div>
     </form>
+    </div>
+    
 <?php endif; ?>
 
 
@@ -157,7 +160,7 @@ $resultado = $stmt->get_result();
         <?php endwhile; ?>
     </table>
 
-    <p><a href="dashboard.php">Volver al panel</a></p>
+    
 </body>
 </html>
 

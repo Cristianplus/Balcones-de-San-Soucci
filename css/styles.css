@@ -10,17 +10,34 @@
 /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #000000;
-    color: #333;
-    line-height: 1.6;
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
+    background-image: url('../img/fondo_index.jpg');
+    background-size: cover;         /* Hace que la imagen ocupe toda la pantalla */
+    background-position: center;    /* Centra la imagen */
+    background-repeat: no-repeat;   /* Evita que se repita */
+    background-attachment: fixed;   /* Mantiene el fondo fijo al hacer scroll */
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Capa desenfocada sobre el fondo */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: inherit; /* Usa la misma imagen */
+    background-size: cover;
+    background-position: left;
+    filter: blur(3px); /* Ajusta el nivel de desenfoque */
+    z-index: -1; /* Envía la capa detrás del contenido */
 }
 
 h1, h2, h3 {
     margin-bottom: 15px;
     color: #000000;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* brillo suave */
 }
 
 p {
@@ -36,23 +53,61 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Posición > logo del condominio */
+.logo-container {
+    background-color: rgb(255, 255, 255);
+    width: auto;
+    display: flex;
+    justify-content: left;
+    margin-top: 0; /* elimina el espacio superior */
+    padding: auto;
+}
+
+/* Tamaño > logo del condominio */
+.logo-container img {
+    height: 60px;
+    width: auto;
+    margin: auto;
+    padding-left: 330px;
+}
+
+.btn-home {
+    width: 30px;                    /* Ajusta tamaño del botón */
+    height: 30px;
+    background-image: url('../img/inicio.png'); /* Ruta de tu imagen */
+    background-size: contain;       /* Ajusta la imagen dentro del botón */
+    background-repeat: no-repeat;   /* Evita que se repita */
+    background-position: center;    /* Centra la imagen */
+    padding-left: 350px;
+    padding-top: 50px;
+    border: none;                   /* Sin borde */
+    cursor: pointer;                /* Cursor tipo mano */
+    background-color: transparent;  /* Sin color de fondo */
+}
+
+/* Efecto hover opcional */
+.btn-home:hover {
+    transform: scale(1.1);          /* Pequeño zoom al pasar el mouse */
+    transition: transform 0.2s;
+}
+
 .welcome-container {
-    background-color: rgba(255, 255, 255, 0.9); /* Blanco con 90% de opacidad */
+    background-color: rgba(255, 255, 255, 0.55); /* Blanco con 55% de opacidad */
     border: 1px solid #ddd;      /* Borde gris claro */
     border-radius: 10px;         /* Bordes redondeados (opcional) */
-    padding: 20px;               /* Espaciado interno */
-    max-width: 600px;            /* Ancho máximo */
+    padding: 40px 60px 30px;     /* Espaciado interno */
+    max-width: 800px;            /* Ancho máximo */
     margin: 30px auto;           /* Centrar horizontalmente */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    text-align: center;          /* Centrar el texto (opcional) */
+    text-align: left;          /* Centrar el texto (opcional) */
 }
 
 /* Formulario */
 .form-principal {
     max-width: 400px;
     margin: 0 auto; /* centrar */
-    background: #fff;
-    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.55); /* Blanco con 55% de opacidad */
+    padding: 30px 30px 10px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     
@@ -107,19 +162,49 @@ input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
+.volver-panel-container {
+    text-align: left;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+/* Botón tipo flecha apuntando a la izquierda */
+.btn-volver {
+    display: inline-flex;
+    align-items: center;       /* centra verticalmente el texto */
+    justify-content: center;   /* centra horizontalmente el texto */
+    padding: 10px 25px 10px 40px; /* padding izquierdo extra */
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    position: relative;
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 15% 100%, 0% 50%); /* forma de flecha */
+    transition: background-color 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: #0056b3;
+}
+
 /* Tablas */
 .tabla-recibos,
 .tabla-documentos {
     border-collapse: collapse;
-    width: 100%;
+    max-width: 800px;
+    width: 80%; 
+    align-self: center;
+    margin: 30px auto; 
     margin-top: 20px;
-    background: #fff;
+    background: rgb(255, 255, 255, 0.6);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .tabla-recibos th {
+    background: rgb(255, 255, 255, 0.5);
     border: 1px solid #ddd;
-    padding: 12px;
+    padding: 10px;
     text-align: center;
 }
 
@@ -128,7 +213,7 @@ input[type="submit"]:hover {
 .tabla-documentos td {
     border: 1px solid #ddd;
     padding: 12px;
-    text-align: left;
+    text-align: center;
 }
 
 .tabla-recibos th,
@@ -161,6 +246,7 @@ a.button-user {
     border-radius: 4px;
     margin-top: 10px;
     width: 90px;
+    justify-content: center;
     text-align: center;
     text-decoration: none;
 }
@@ -186,17 +272,19 @@ a.button-user:hover {
 /* Formulario Crear o Editar Usuario */
 .form-group {
     margin-bottom: 15px;
+    padding-left: 70px;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* brillo suave */
 }
 
 .form-group input,
 .form-group select {
-    width: 100%;
+    width: 500px;
     padding: 8px;
     box-sizing: border-box;
 }
@@ -238,10 +326,10 @@ a.button-user:hover {
 
 /* Estilos para el panel de control */
 .dashboard-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
+    max-width: 560px;
+    margin: 10px auto;
+    padding: 20px 20px 10px 20px;
+    background-color: rgba(255, 255, 255, 0.7);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     font-family: Arial, sans-serif;
@@ -259,24 +347,23 @@ a.button-user:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px; /* Espaciado entre los contenedores */
+    gap: 10px; /* Espaciado entre los contenedores */
     margin-top: 20px;
 }
 
 /* Estilo de cada enlace */
 .enlace-item {
     background-color: #96bfd0;
-    padding: 2px 40px;
+    padding: 5px 10px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
     text-align: center;
-    width: 250px; /* ancho */
+    width: 180px; /* ancho */
     min-width: 200px; /* Ancho mínimo para los enlaces */
     cursor: pointer; /* Cambia el cursor al pasar por encima */
     color: #030d18;
     font-size: 16px;
-    text-decoration: none;
 }
 
 /* Efecto hover para los contenedores de enlaces */
@@ -292,7 +379,6 @@ a.button-user:hover {
     padding: 10px 20px;
     background-color: #dc3545;
     color: #ffffff;
-    text-decoration: none;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -302,21 +388,7 @@ a.button-user:hover {
 
 .logout-button:hover {
     background-color: #c82333;
-}
-
-/* Posición > logo del condominio */
-
-.logo-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-/* Tamaño > logo del condominio */
-
-.logo-container img {
-    height: 180px;
-    width: auto;
+    text-decoration: none ;
 }
 
 .fila-solicitud {
