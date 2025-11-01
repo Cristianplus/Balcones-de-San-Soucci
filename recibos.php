@@ -82,7 +82,7 @@ $resultado = $stmt->get_result();
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1 style="text-align: center;">Recibos de Administración</h1>
+    <h1 style="text-align: center; padding-top: 20px;">Recibos de Administración</h1>
 
     <?php if ($rol === 'administrador'): ?>
     <h2 style="padding-left: 130px";>Agregar Recibo</h2>

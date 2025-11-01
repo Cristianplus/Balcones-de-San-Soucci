@@ -17,6 +17,7 @@ body {
     background-attachment: fixed;   /* Mantiene el fondo fijo al hacer scroll */
     position: relative;
     overflow-x: hidden;
+    display: block;
 }
 
 /* Capa desenfocada sobre el fondo */
@@ -30,7 +31,7 @@ body::before {
     background-image: inherit; /* Usa la misma imagen */
     background-size: cover;
     background-position: left;
-    filter: blur(3px); /* Ajusta el nivel de desenfoque */
+    filter: blur(8px); /* Ajusta el nivel de desenfoque */
     z-index: -1; /* Envía la capa detrás del contenido */
 }
 
@@ -58,18 +59,21 @@ a:hover {
     background-color: rgb(255, 255, 255);
     width: auto;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     justify-content: left;
     margin-top: 0; /* elimina el espacio superior */
     padding: auto;
+    box-sizing: border-box;
+    padding-left: 10px;
 }
 
 /* Tamaño > logo del condominio */
 .logo-container img {
     height: 60px;
     width: auto;
-    margin: auto;
-    padding-left: 330px;
-    text-align: center;}
+    margin: 0 auto;
+}
 
 .btn-home {
     width: 30px;                    /* Ajusta tamaño del botón */
@@ -78,17 +82,16 @@ a:hover {
     background-size: contain;       /* Ajusta la imagen dentro del botón */
     background-repeat: no-repeat;   /* Evita que se repita */
     background-position: center;    /* Centra la imagen */
-    padding-left: 350px;
-    padding-top: 50px;
     border: none;                   /* Sin borde */
     cursor: pointer;                /* Cursor tipo mano */
     background-color: transparent;  /* Sin color de fondo */
+    transition: transform 0.2s;
+    padding-right: 60px;
 }
 
 /* Efecto hover opcional */
 .btn-home:hover {
     transform: scale(1.1);          /* Pequeño zoom al pasar el mouse */
-    transition: transform 0.2s;
 }
 
 .welcome-container {
@@ -173,10 +176,9 @@ input[type="submit"]:hover {
     display: inline-flex;
     align-items: center;       /* centra verticalmente el texto */
     justify-content: center;   /* centra horizontalmente el texto */
-    padding: 10px 25px 10px 40px; /* padding izquierdo extra */
+    padding: 5px 25px 5px 40px; /* padding izquierdo extra */
     background-color: #007BFF;
     color: #fff;
-    text-decoration: none;
     font-weight: bold;
     border: none;
     position: relative;
@@ -186,11 +188,20 @@ input[type="submit"]:hover {
 
 .btn-volver:hover {
     background-color: #0056b3;
+    text-decoration: none;
 }
 
+/* Placeholder invisible para mantener el layout estable */
+.volver-panel-placeholder {
+    width: 130px; /* mismo ancho aproximado del botón .btn-volver */
+    height: 40px; /* altura similar */
+    visibility: hidden; /* invisible */
+    pointer-events: none; /* no clickeable */
+}
+
+
 /* Tablas */
-.tabla-recibos,
-.tabla-documentos {
+.tabla-recibos{
     border-collapse: collapse;
     max-width: 800px;
     width: 80%; 
@@ -199,6 +210,19 @@ input[type="submit"]:hover {
     margin-top: 20px;
     background: rgb(255, 255, 255, 0.6);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tabla-documentos {
+    border-collapse: collapse;
+    max-width: 800px;
+    width: 80%; 
+    align-self: center;
+    margin: 30px auto; 
+
+    margin-top: 20px;
+    background: rgb(255, 255, 255, 0.6);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
 }
 
 .tabla-recibos th {
@@ -230,6 +254,7 @@ a.button {
     color: white;
     border-radius: 4px;
     margin-top: 10px;
+    margin-left: 10px;
     text-decoration: none;
 }
 
@@ -289,25 +314,19 @@ a.button-user:hover {
     box-sizing: border-box;
 }
 
-/* Tabla de documentos */
-.tabla-documentos {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-}
+
 
 /* Tabla de solicitudes */
 
 .tabla-solicitudes {
-    width: 100%;
+    max-width: 900px;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 30px auto;
     font-family: Arial, sans-serif;
     font-size: 14px;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.55); /* Blanco con 55% de opacidad */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 0 20px 0 20px;
 }
 
 .tabla-solicitudes th,
@@ -453,13 +472,13 @@ a.button-user:hover {
 }
 
 footer {
-    position: fixed;      /* Lo fija en pantalla */
+    
     bottom: 0;            /* Lo ubica al fondo */
     padding: 20px;              /* Pegado a la izquierda */
     width: auto;          /* Solo ocupa lo necesario */
     padding: 10px 20px;   /* Espaciado interno */
-    background: transparent; /* Fondo transparente, cámbialo si lo prefieres */
+    background: transparent; /* Fondo transparente */
     color: black;         /* Cambia según tu fondo */
     font-size: 14px;
-    z-index: 1000;        /* Asegura que quede por encima del contenido */
+    
 }

@@ -1,5 +1,5 @@
 <?php
-session_start();
+include 'includes/header.php';
 include 'includes/db.php';
 
 // Verificar si el usuario ha iniciado sesión
@@ -89,7 +89,7 @@ $resultado = $stmt->get_result();
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Solicitudes</h1>
+    <h1 style="text-align: center; padding-top: 20px";>Solicitudes</h1>
 
     <?php if (isset($success)): ?>
         <p style="color: green;"><?php echo $success; ?></p>
@@ -106,7 +106,7 @@ $resultado = $stmt->get_result();
         <hr>
     <?php endif; ?>
 
-    <h2>Listado de Solicitudes</h2>
+    <h2 style="padding-left: 190px";>Listado de Solicitudes</h2>
     <table class="tabla-solicitudes" id="tabla-solicitudes">
         <thead>
             <tr>
@@ -165,8 +165,6 @@ $resultado = $stmt->get_result();
         </tbody>
     </table>
 
-    <p><a href="dashboard.php">Volver al panel</a></p>
-
     <script src="js/scripts.js"></script>
 </body>
 </html>
@@ -174,3 +172,4 @@ $resultado = $stmt->get_result();
 $stmt->close();
 $conn->close();
 ?>
+<?php include 'includes/footer.php'; ?>

@@ -68,3 +68,4 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
 
 </body>
 </html>
+<?php include 'includes/footer.php'; ?>

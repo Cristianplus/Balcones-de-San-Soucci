@@ -24,7 +24,7 @@ $resultado = $stmt->get_result();
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Documentos del Condominio</h1>
+    <h1 style="text-align: center; padding-top: 20px;">Documentos del Condominio</h1>
 
     <table class="tabla-documentos">
         <tr>
