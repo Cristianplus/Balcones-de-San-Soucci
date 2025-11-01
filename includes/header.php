@@ -29,5 +29,5 @@ $archivo_actual = basename($_SERVER['PHP_SELF']);
     ?>
 
     <img src="img/logo.jpg" alt="Logo del Condominio">
-    <button class="btn-home" onclick="window.location.href='index.html'"></button>
+    <button class="btn-home" onclick="window.location.href='index.php'"></button>
 </div>

@@ -1,10 +1,24 @@
 <?php
 session_start();
 include("includes/db.php");
-include("includes/header.php"); // Solo añade el header visual aquí
+include("includes/header.php"); // Encabezado visual
 
-// Verificar sí se envió el formulario
-if ($_SERVER["REQUEST_METHOD"]=="POST") {
+// --- Si ya hay una sesión activa y no ha pasado más de 5 minutos ---
+if (isset($_SESSION['usuario_id']) && isset($_SESSION['ultimo_acceso'])) {
+    $tiempo_transcurrido = time() - $_SESSION['ultimo_acceso'];
+
+    if ($tiempo_transcurrido < 300) { // 300 segundos = 5 minutos
+        header("Location: dashboard.php");
+        exit;
+    } else {
+        // Si ya pasaron 5 minutos, se destruye la sesión
+        session_unset();
+        session_destroy();
+    }
+}
+
+// --- Verificar si se envió el formulario ---
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $correo = $_POST['correo'];
     $contraseña = $_POST['contraseña'];
 
@@ -18,22 +32,19 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     $stmt->execute();
     $resultado = $stmt->get_result();
 
-    if($resultado->num_rows === 1) {
+    if ($resultado->num_rows === 1) {
         $usuario = $resultado->fetch_assoc();
 
-        // Verificar la contraseña
+        // Verificar contraseña (comparar hash md5)
         if ($usuario['contraseña'] === md5($contraseña)) {
             // Guardar los datos en la sesión
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['nombre'] = $usuario['nombre'];
-            $_SESSION['rol'] = $usuario['rol'];          
+            $_SESSION['rol'] = $usuario['rol'];
+            $_SESSION['ultimo_acceso'] = time(); // 🕒 Guarda hora actual
 
-            // Redirigir según el rol del usuario
-            if ($usuario['rol'] === 'administrador') {
-                header("Location: dashboard.php");
-            } else {
-                header("Location: dashboard.php");
-            }
+            // Redirigir al panel principal
+            header("Location: dashboard.php");
             exit;
         } else {
             $error = "Contraseña incorrecta.";
@@ -44,12 +55,9 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
     $stmt->close();
 }
-?>
 
-<?php
 header('Content-Type: text/html; charset=utf-8');
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -62,7 +70,7 @@ header('Content-Type: text/html; charset=utf-8');
     <h2 style="padding-left: 330px; padding-top: 20px;">Iniciar Sesión</h2>
 
     <?php if (!empty($error)): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
+        <p style="color: red; text-align:center;"><?php echo $error; ?></p>
     <?php endif; ?>
 
     <form action="login.php" method="POST" class="form-principal">
@@ -77,5 +85,6 @@ header('Content-Type: text/html; charset=utf-8');
 
 </body>
 </html>
+
 <br><br><br>
 <?php include("includes/footer.php"); ?>
