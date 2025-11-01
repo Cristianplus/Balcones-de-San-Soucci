@@ -1,5 +1,45 @@
 <?php
 include 'includes/header.php';
+if (isset($_SESSION['mensaje_exito'])) {
+    echo '<div id="popup-mensaje" class="popup-mensaje exito">' . $_SESSION['mensaje_exito'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
+    unset($_SESSION['mensaje_exito']);
+}
+if (isset($_SESSION['mensaje_error'])) {
+    echo '<div id="popup-mensaje" class="popup-mensaje error">' . $_SESSION['mensaje_error'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
+    unset($_SESSION['mensaje_error']);
+}
+?>
+
+<script>
+function showPopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.display = 'block';
+        setTimeout(() => {
+            popup.style.opacity = 1;
+            popup.style.top = '40px';
+        }, 10);
+
+        setTimeout(() => {
+            closePopup();
+        }, 5000); // Cierra el pop-up después de 5 segundos
+    }
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.opacity = 0;
+        popup.style.top = '20px';
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 500);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', showPopup);
+</script>
+<?php
   error_reporting(E_ALL);
   ini_set('display_errors', 1);
 
@@ -25,11 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssss", $nombre, $numero_casa, $rol, $correo, $contraseña);
 
     if ($stmt->execute()) {
-            $_SESSION['mensaje_exito'] = "✅ Usuario creado exitosamente.";
+            $_SESSION['mensaje_exito'] = "Usuario creado exitosamente.";
             header("Location: usuarios.php");
             exit;
         } else {
-        echo "Error al crear el usuario: " . $stmt->error;
+        $_SESSION['mensaje_error'] = "Error al crear el usuario: " . $stmt->error;
+        header("Location: crear_usuario.php");
+        exit;
     }
 
     $stmt->close();
@@ -45,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <h1 style="padding-left: 130px";>Crear Usuario</h1>
-    <form action="crear_usuario.php" method="POST" class="welcome-container">
+    <form action="crear_usuario.php" method="POST" class="form-principal">
         <div class="form-group">
             <label for="nombre">Nombre:</label>
             <input type="text" name="nombre" id="nombre" required>

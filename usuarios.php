@@ -1,10 +1,48 @@
 <?php
 include 'includes/header.php';
 
+
 if (isset($_SESSION['mensaje_exito'])) {
-    echo '<div class="mensaje-exito">' . $_SESSION['mensaje_exito'] . '</div>';
+    echo '<div id="popup-mensaje" class="popup-mensaje exito">' . $_SESSION['mensaje_exito'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
     unset($_SESSION['mensaje_exito']);
 }
+if (isset($_SESSION['mensaje_error'])) {
+    echo '<div id="popup-mensaje" class="popup-mensaje error">' . $_SESSION['mensaje_error'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
+    unset($_SESSION['mensaje_error']);
+}
+?>
+
+<script>
+function showPopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.display = 'block';
+        setTimeout(() => {
+            popup.style.opacity = 1;
+            popup.style.top = '40px';
+        }, 10);
+
+        setTimeout(() => {
+            closePopup();
+        }, 5000); // Cierra el pop-up después de 5 segundos
+    }
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.opacity = 0;
+        popup.style.top = '20px';
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 500);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', showPopup);
+</script>
+<?php
+
 include("includes/db.php");
 
 // Verificar si el usuario ha iniciado sesión y es administrador
@@ -26,6 +64,7 @@ if (isset($_GET['eliminar'])) {
 
 // Obtener la lista de usuarios
 $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usuarios ORDER BY id ASC");
+
 ?>
 
 <!DOCTYPE html>
@@ -50,6 +89,7 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
             </tr>
         </thead>
         <tbody>
+
             <?php while ($usuario = $resultado->fetch_assoc()): ?>
                 <tr>
                     <td><?php echo $usuario['id']; ?></td>
@@ -59,7 +99,14 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
                     <td><?php echo htmlspecialchars($usuario['correo']); ?></td>
                     <td>
                         <a href="editar_usuario.php?id=<?php echo $usuario['id']; ?>" class="button-user">Editar</a>
-                        <a href="usuarios.php?eliminar=<?php echo $usuario['id']; ?>" class="button-user" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
+                        <?php if ($usuario['rol'] !== 'administrador'): ?>
+                        <a href="usuarios.php?eliminar=<?php echo $usuario['id']; ?>" 
+                        class="button-user" 
+                        onclick="return confirm('¿Estás seguro de eliminar este usuario?');">
+                        Eliminar
+                        </a>
+                    <?php endif; ?>
+
                     </td>
                 </tr>
             <?php endwhile; ?>

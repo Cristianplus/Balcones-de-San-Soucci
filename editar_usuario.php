@@ -1,6 +1,47 @@
 <?php
+include 'includes/header.php';
 // Iniciar sesión y verificar si el usuario es administrador
-session_start();
+
+if (isset($_SESSION['mensaje_exito'])) {
+    echo '<div id="popup-mensaje" class="popup-mensaje exito">' . $_SESSION['mensaje_exito'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
+    unset($_SESSION['mensaje_exito']);
+}
+if (isset($_SESSION['mensaje_error'])) {
+    echo '<div id="popup-mensaje" class="popup-mensaje error">' . $_SESSION['mensaje_error'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
+    unset($_SESSION['mensaje_error']);
+}
+?>
+
+<script>
+function showPopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.display = 'block';
+        setTimeout(() => {
+            popup.style.opacity = 1;
+            popup.style.top = '40px';
+        }, 10);
+
+        setTimeout(() => {
+            closePopup();
+        }, 5000); // Cierra el pop-up después de 5 segundos
+    }
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.opacity = 0;
+        popup.style.top = '20px';
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 500);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', showPopup);
+</script>
+<?php
 if ($_SESSION['rol'] !== 'administrador') {
     header("Location: login.php");
     exit;
@@ -36,31 +77,54 @@ if (isset($_GET['id'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
     $rol = $_POST['rol'];
-    $numero_casa = ($rol === 'administrador') ? null : $_POST['numero_casa'];
+    // Si no existe el campo número de casa en el formulario o viene vacío, usar NULL
+    $numero_casa = (isset($_POST['numero_casa']) && $_POST['numero_casa'] !== '') ? $_POST['numero_casa'] : null;
     $correo = $_POST['correo'];
-    $contrasena = $_POST['contrasena'];
+    $contraseña = $_POST['contraseña'];
 
     if (!empty($contrasena)) {
         // Si se proporciona una nueva contraseña, encriptarla
-        $contrasena_encriptada = md5($contrasena);
-        $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, numero_casa = ?, rol = ?, correo = ?, contrasena = ? WHERE id = ?");
-        $stmt->bind_param("sssssi", $nombre, $numero_casa, $rol, $correo, $contrasena_encriptada, $id);
+        $contraseña_encriptada = md5($contraseña);
+
+        $sql = "UPDATE usuarios SET nombre = ?, numero_casa = ?, rol = ?, correo = ?, contraseña = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+
+        if (!$stmt) {
+            // Mostrar error claro y redirigir
+            $_SESSION['mensaje_error'] = "Error al preparar la consulta (actualizar contraseña): " . $conn->error;
+            header("Location: editar_usuario.php?id=" . $id);
+            exit;
+        }
+
+        // Si numero_casa es NULL debemos enviar null como string también está bien si la columna acepta NULL.
+        $stmt->bind_param("sssssi", $nombre, $numero_casa, $rol, $correo, $contraseña_encriptada, $id);
     } else {
         // Si no se proporciona una nueva contraseña, no actualizarla
-        $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, numero_casa = ?, rol = ?, correo = ? WHERE id = ?");
+        $sql = "UPDATE usuarios SET nombre = ?, numero_casa = ?, rol = ?, correo = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+
+        if (!$stmt) {
+            $_SESSION['mensaje_error'] = "Error al preparar la consulta (UPDATE sin contraseña): " . $conn->error;
+            header("Location: editar_usuario.php?id=" . $id);
+            exit;
+        }
+
         $stmt->bind_param("ssssi", $nombre, $numero_casa, $rol, $correo, $id);
     }
 
     if ($stmt->execute()) {
-        $_SESSION['mensaje_exito'] = "✅ Usuario editado exitosamente.";
+        $_SESSION['mensaje_exito'] = "Usuario editado exitosamente.";
         header("Location: usuarios.php");
         exit;
     } else {
-        echo "Error al actualizar el usuario: " . $stmt->error;
+        $_SESSION['mensaje_error'] = "Error al actualizar el usuario: " . $stmt->error;
+        header("Location: editar_usuario.php?id=" . $id);
+        exit;
     }
 
     $stmt->close();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h2>Editar Usuario</h2>
+    <h1 style="padding: 10px; text-align: center";>Editar Usuario</h1>
     <form action="editar_usuario.php?id=<?php echo $id; ?>" method="POST" class="form-principal">
         <div class="form-group">
             <label for="nombre">Nombre:</label>
@@ -97,8 +161,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="form-group">
-            <label for="contrasena">Nueva Contraseña (dejar en blanco para no cambiarla):</label>
-            <input type="password" name="contrasena">
+            <label for="contraseña">Nueva Contraseña (dejar en blanco para no cambiarla):</label>
+            <input type="password" name="contraseña">
         </div>
 
         <div class="form-group">

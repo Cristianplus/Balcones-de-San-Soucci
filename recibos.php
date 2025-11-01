@@ -1,5 +1,45 @@
 <?php include 'includes/header.php'; ?>
 <?php
+if (isset($_SESSION['mensaje_exito'])) {
+    echo '<div id="popup-mensaje" class="popup-mensaje exito">' . $_SESSION['mensaje_exito'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
+    unset($_SESSION['mensaje_exito']);
+}
+if (isset($_SESSION['mensaje_error'])) {
+    echo '<div id="popup-mensaje" class="popup-mensaje error">' . $_SESSION['mensaje_error'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
+    unset($_SESSION['mensaje_error']);
+}
+?>
+
+<script>
+function showPopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.display = 'block';
+        setTimeout(() => {
+            popup.style.opacity = 1;
+            popup.style.top = '40px';
+        }, 10);
+
+        setTimeout(() => {
+            closePopup();
+        }, 5000); // Cierra el pop-up después de 5 segundos
+    }
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.opacity = 0;
+        popup.style.top = '20px';
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 500);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', showPopup);
+</script>
+<?php
 
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['usuario_id'])) {
@@ -24,11 +64,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $rol === 'administrador') {
     $stmt->bind_param("isss", $usuario_id, $monto, $fecha_limite, $estado);
 
     if ($stmt->execute()) {
-        $_SESSION['mensaje_exito'] = "✅ Recibo agregado exitosamente.";
+        $_SESSION['mensaje_exito'] = "Recibo agregado exitosamente.";
         header("Location: recibos.php"); // Redirigir para evitar reenvío
         exit;
     } else {
-        echo "Error al agregar el recibo: " . $stmt->error;
+        $_SESSION['mensaje_error'] = "Error al agregar el recibo: " . $stmt->error;
+        header("Location: recibos.php"); // Redirigir para evitar reenvío
+        exit;
     }
 
     $stmt->close();
@@ -86,7 +128,7 @@ $resultado = $stmt->get_result();
 
     <?php if ($rol === 'administrador'): ?>
     <h2 style="padding-left: 130px";>Agregar Recibo</h2>
-    <div class="welcome-container">
+    <div class="form-principal">
     <form action="recibos.php" method="POST">
         <div class="form-group">
             <label for="usuario_id">Residente:</label>

@@ -281,23 +281,44 @@ a.button-user:hover {
     text-decoration: none;
 }
 
-/* Mensaje de exito */
-
-.mensaje-exito {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 20px;
+/* Estilos para el mensaje emergente */
+.popup-mensaje {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: #fff;
     font-size: 16px;
+    z-index: 1000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s, top 0.5s;
+}
+
+.popup-mensaje.exito {
+    background-color: #28a745; /* Verde */
+}
+
+.popup-mensaje.error {
+    background-color: #dc3545; /* Rojo */
+}
+
+.popup-mensaje .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
 }
 
 
 /* Formulario Crear o Editar Usuario */
 .form-group {
     margin-bottom: 15px;
-    padding-left: 70px;
+    align-items: center;
 }
 
 .form-group label {
@@ -309,7 +330,7 @@ a.button-user:hover {
 
 .form-group input,
 .form-group select {
-    width: 500px;
+    width: 340px;
     padding: 8px;
     box-sizing: border-box;
 }
