@@ -1,5 +1,5 @@
+<?php include 'includes/header.php'; ?>
 <?php
-session_start();
 
 // Si existe una sesión y fue actualizada hace menos de 5 minutos (300 segundos)
 if (isset($_SESSION['usuario']) && isset($_SESSION['ultimo_acceso'])) {
@@ -28,11 +28,6 @@ if (isset($_SESSION['usuario']) && isset($_SESSION['ultimo_acceso'])) {
         <link rel="stylesheet" href="css/styles.css?v=1.0">
     </head>
     <body>
-        <!-- Logo -->
-        <div class="logo-container">
-            <img src="img/logo.jpg" alt="Logo del Condominio">
-            <button class="btn-home" onclick="window.location.href='index.html'"></button>
-        </div>
     
         <div class="welcome-container">
             <h1>Bienvenido a la plataforma del Condominio</h1>
