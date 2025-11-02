@@ -1,5 +1,13 @@
 <?php
 include 'includes/header.php';
+if (isset($_SESSION['mensaje_exito'])) {
+    echo '<div id="popup-mensaje" class="popup-mensaje exito">' . $_SESSION['mensaje_exito'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
+    unset($_SESSION['mensaje_exito']);
+}
+if (isset($_SESSION['mensaje_error'])) {
+    echo '<div id="popup-mensaje" class="popup-mensaje error">' . $_SESSION['mensaje_error'] . '<span class="close-btn" onclick="closePopup()">&times;</span></div>';
+    unset($_SESSION['mensaje_error']);
+}
 include 'includes/db.php';
 
 // Verificar si el usuario ha iniciado sesión
@@ -19,10 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mensaje'])) {
         $stmt->bind_param("is", $usuario_id, $mensaje);
         $stmt->execute();
         $stmt->close();
-        $success = "Solicitud enviada correctamente.";
+        $_SESSION['mensaje_exito'] = "Solicitud enviada correctamente.";
     } else {
-        $error = "El mensaje no puede estar vacío.";
+        $_SESSION['mensaje_error'] = "El mensaje no puede estar vacío.";
     }
+    header("Location: solicitudes.php");
+    exit;
 }
 
 // Procesar respuesta del administrador
@@ -35,10 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['respuesta']) && $rol 
         $stmt->bind_param("si", $respuesta, $solicitud_id);
         $stmt->execute();
         $stmt->close();
-        $success = "Respuesta enviada correctamente.";
+        $_SESSION['mensaje_exito'] = "Respuesta enviada correctamente.";
     } else {
-        $error = "La respuesta no puede estar vacía.";
+        $_SESSION['mensaje_error'] = "La respuesta no puede estar vacía.";
     }
+    header("Location: solicitudes.php");
+    exit;
 }
 
 // Procesar eliminación de solicitud
@@ -55,11 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_solicitud'])
     }
 
     if ($stmt->execute()) {
-        $success = "Solicitud eliminada correctamente.";
+        $_SESSION['mensaje_exito'] = "Solicitud eliminada correctamente.";
     } else {
-        $error = "Error al eliminar la solicitud.";
+        $_SESSION['mensaje_error'] = "Error al eliminar la solicitud.";
     }
     $stmt->close();
+    header("Location: solicitudes.php");
+    exit;
 }
 
 // Obtener las solicitudes para mostrar
@@ -91,11 +105,7 @@ $resultado = $stmt->get_result();
 <body>
     <h1 style="text-align: center; padding-top: 20px";>Solicitudes</h1>
 
-    <?php if (isset($success)): ?>
-        <p style="color: green;"><?php echo $success; ?></p>
-    <?php elseif (isset($error)): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
+
 
     <?php if ($rol !== 'administrador'): ?>
         <form method="POST" action="solicitudes.php" class="form-principal">
@@ -166,6 +176,35 @@ $resultado = $stmt->get_result();
     </table>
 
     <script src="js/scripts.js"></script>
+    <script>
+function showPopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.display = 'block';
+        setTimeout(() => {
+            popup.style.opacity = 1;
+            popup.style.top = '40px';
+        }, 10);
+
+        setTimeout(() => {
+            closePopup();
+        }, 5000); // Cierra el pop-up después de 5 segundos
+    }
+}
+
+function closePopup() {
+    const popup = document.getElementById('popup-mensaje');
+    if (popup) {
+        popup.style.opacity = 0;
+        popup.style.top = '20px';
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, 500);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', showPopup);
+</script>
 </body>
 </html>
 <?php
