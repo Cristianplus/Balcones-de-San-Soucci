@@ -75,7 +75,7 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
     <link rel="stylesheet" href="css/styles.css?v=1.0">
 </head>
 <body>
-    <h1 style="padding-left: 10px; padding-top: 20px;">Gestión de Usuarios</h1>
+    <h1 style="text-align: center; padding-top: 15px";>Gestión de Usuarios</h1>
     <a href="crear_usuario.php" class="button">+ Crear Usuario</a>
     <table class="tabla-recibos">
         <thead>
