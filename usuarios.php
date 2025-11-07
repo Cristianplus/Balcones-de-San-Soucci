@@ -80,7 +80,6 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
     <table class="tabla-recibos">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nombre</th>
                 <th>Casa</th>
                 <th>Rol</th>
@@ -92,7 +91,7 @@ $resultado = $conn->query("SELECT id, nombre, numero_casa, rol, correo FROM usua
 
             <?php while ($usuario = $resultado->fetch_assoc()): ?>
                 <tr>
-                    <td><?php echo $usuario['id']; ?></td>
+                    
                     <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
                     <td style="text-align: center;"><?php echo htmlspecialchars($usuario['numero_casa']); ?></td>
                     <td><?php echo $usuario['rol']; ?></td>

@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $rol === 'administrador') {
     $usuario_id = $_POST['usuario_id'];
     $monto = $_POST['monto'];
     $fecha_limite = $_POST['fecha_limite'];
-    $estado = $_POST['estado'];
+    $estado = 'Pendiente';
 
     // Insertar el nuevo recibo en la base de datos
     $stmt = $conn->prepare("INSERT INTO recibos (usuario_id, monto, fecha_limite, estado) VALUES (?, ?, ?, ?)");
@@ -134,7 +134,6 @@ $resultado = $stmt->get_result();
             <label for="usuario_id">Residente:</label>
             <select name="usuario_id" id="usuario_id" required>
                 <?php
-                // Obtener los residentes para mostrarlos en el formulario
                 $stmt_residentes = $conn->prepare("SELECT id, nombre FROM usuarios WHERE rol = 'residente'");
                 $stmt_residentes->execute();
                 $result_residentes = $stmt_residentes->get_result();
@@ -156,17 +155,10 @@ $resultado = $stmt->get_result();
         </div>
 
         <div class="form-group">
-            <label for="estado">Estado:</label>
-            <select name="estado" id="estado" required>
-                <option value="Pendiente">Pendiente</option>
-                <option value="Pagado">Pagado</option>
-            </select>
-        </div>
-
-        <div class="form-group">
             <input type="submit" value="Agregar Recibo">
         </div>
     </form>
+
     </div>
     
 <?php endif; ?>

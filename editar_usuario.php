@@ -77,30 +77,39 @@ if (isset($_GET['id'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
     $rol = $_POST['rol'];
-    // Si no existe el campo número de casa en el formulario o viene vacío, usar NULL
-    $numero_casa = (isset($_POST['numero_casa']) && $_POST['numero_casa'] !== '') ? $_POST['numero_casa'] : null;
     $correo = $_POST['correo'];
     $contraseña = $_POST['contraseña'];
 
-    if (!empty($contrasena)) {
-        // Si se proporciona una nueva contraseña, encriptarla
+    // Si el rol es administrador, forzar número de casa a NULL
+    if ($rol === 'administrador') {
+        $numero_casa = null;
+    } else {
+        // Si es residente, tomar el número de casa del formulario (o NULL si vacío)
+        $numero_casa = (!empty($_POST['numero_casa'])) ? $_POST['numero_casa'] : null;
+    }
+
+    // Si se proporciona una nueva contraseña
+    if (!empty($contraseña)) {
         $contraseña_encriptada = md5($contraseña);
 
-        $sql = "UPDATE usuarios SET nombre = ?, numero_casa = ?, rol = ?, correo = ?, contraseña = ? WHERE id = ?";
+        $sql = "UPDATE usuarios 
+                SET nombre = ?, numero_casa = ?, rol = ?, correo = ?, contraseña = ? 
+                WHERE id = ?";
         $stmt = $conn->prepare($sql);
 
         if (!$stmt) {
-            // Mostrar error claro y redirigir
             $_SESSION['mensaje_error'] = "Error al preparar la consulta (actualizar contraseña): " . $conn->error;
             header("Location: editar_usuario.php?id=" . $id);
             exit;
         }
 
-        // Si numero_casa es NULL debemos enviar null como string también está bien si la columna acepta NULL.
         $stmt->bind_param("sssssi", $nombre, $numero_casa, $rol, $correo, $contraseña_encriptada, $id);
+
     } else {
-        // Si no se proporciona una nueva contraseña, no actualizarla
-        $sql = "UPDATE usuarios SET nombre = ?, numero_casa = ?, rol = ?, correo = ? WHERE id = ?";
+        // Si no se cambia la contraseña
+        $sql = "UPDATE usuarios 
+                SET nombre = ?, numero_casa = ?, rol = ?, correo = ? 
+                WHERE id = ?";
         $stmt = $conn->prepare($sql);
 
         if (!$stmt) {
@@ -124,6 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
 }
+
 
 ?>
 
@@ -169,28 +179,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="submit" value="Actualizar Usuario">
         </div>
     </form>
-    <p><a href="usuarios.php">Volver a la lista de usuarios</a></p>
-
-    <!-- Script para ocultar el campo "Número de Casa" si se selecciona "administrador" -->
-    <script>
-        const rolSelect = document.getElementById('rol');
-        const grupoNumeroCasa = document.getElementById('grupo-numero-casa');
-
-        function actualizarVisibilidad() {
-            if (rolSelect.value === 'administrador') {
-                grupoNumeroCasa.style.display = 'none';
-                document.getElementById('numero_casa').required = false;
-            } else {
-                grupoNumeroCasa.style.display = 'block';
-                document.getElementById('numero_casa').required = true;
-            }
-        }
-
-        rolSelect.addEventListener('change', actualizarVisibilidad);
-
-        // Llamamos a la función al cargar la página por si ya viene con un valor seleccionado
-        actualizarVisibilidad();
-    </script>
+    <script src="js/scripts.js"></script>
+    
 
 </body>
 </html>

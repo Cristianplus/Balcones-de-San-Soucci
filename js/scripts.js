@@ -1,4 +1,37 @@
-// Scripts JS para interactividad
+// Detectar tecla Enter dentro del textarea
+document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.getElementById('mensaje');
+    const form = textarea.closest('form');
+
+    textarea.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault(); // Evita el salto de línea
+            form.submit(); // Envía el formulario
+        }
+    });
+});
+
+// Script para mostrar/ocultar campo "Número de Casa"
+
+        const rolSelect = document.getElementById('rol');
+        const grupoNumeroCasa = document.getElementById('grupo-numero-casa');
+        const numeroCasaInput = document.getElementById('numero_casa');
+
+        function actualizarVisibilidad() {
+            if (rolSelect.value === 'administrador') {
+                grupoNumeroCasa.style.display = 'none';
+                numeroCasaInput.required = false;
+                numeroCasaInput.value = ''; // Limpia el valor cuando es administrador
+            } else {
+                grupoNumeroCasa.style.display = 'block';
+                numeroCasaInput.required = true;
+            }
+        }
+
+        rolSelect.addEventListener('change', actualizarVisibilidad);
+        document.addEventListener('DOMContentLoaded', actualizarVisibilidad);
+
+// Script para interactividad general
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log("JS cargado correctamente");

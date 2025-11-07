@@ -15,7 +15,7 @@ $archivo_actual = basename($_SERVER['PHP_SELF']);
     $archivos_con_volver_panel = ['usuarios.php','recibos.php', 'documentos.php', 'solicitudes.php'];
 
     // Archivos que muestran "Volver a usuarios"
-    $archivos_con_volver_usuarios = ['crear_usuario.php'];
+    $archivos_con_volver_usuarios = ['crear_usuario.php','editar_usuario.php'];
 
     // Mostrar botón correspondiente o el placeholder invisible
     if (in_array($archivo_actual, $archivos_con_volver_panel)) {

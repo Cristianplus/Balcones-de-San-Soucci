@@ -110,13 +110,13 @@ $resultado = $stmt->get_result();
     <?php if ($rol !== 'administrador'): ?>
         <form method="POST" action="solicitudes.php" class="form-principal">
             <label for="mensaje">Escribe tu solicitud:</label><br>
-            <textarea name="mensaje" id="mensaje" rows="4" cols="40" required></textarea><br>
+            <textarea name="mensaje" id="mensaje" rows="4" cols="40" required placeholder="Escribe tu solicitud"></textarea><br><br>
             <input type="submit" value="Enviar solicitud">
         </form>
-        <hr>
+        
     <?php endif; ?>
 
-    <h2 style="padding-left: 190px";>Listado de Solicitudes</h2>
+    <h2 style="text-align: center; padding-top: 20px";>Listado de Solicitudes</h2>
     <table class="tabla-solicitudes" id="tabla-solicitudes">
         <thead>
             <tr>
@@ -175,9 +175,9 @@ $resultado = $stmt->get_result();
         </tbody>
     </table>
 
-    <script src="js/scripts.js"></script>
-    <script>
-function showPopup() {
+<script src="js/scripts.js"></script>
+<script>
+    function showPopup() {
     const popup = document.getElementById('popup-mensaje');
     if (popup) {
         popup.style.display = 'block';
@@ -205,6 +205,7 @@ function closePopup() {
 
 document.addEventListener('DOMContentLoaded', showPopup);
 </script>
+    
 </body>
 </html>
 <?php
