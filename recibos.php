@@ -127,7 +127,7 @@ $resultado = $stmt->get_result();
     <h1 style="text-align: center; padding-top: 20px;">Recibos de Administración</h1>
 
     <?php if ($rol === 'administrador'): ?>
-    <h2 style="padding-left: 130px";>Agregar Recibo</h2>
+    <h2 style="text-align: center";>Agregar Recibo</h2>
     <div class="form-principal">
     <form action="recibos.php" method="POST">
         <div class="form-group">

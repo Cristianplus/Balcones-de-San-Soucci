@@ -67,4 +67,5 @@ $resultado = $stmt->get_result();
 $stmt->close();
 $conn->close();
 ?>
+<br><br><br><br><br><br>
 <?php include 'includes/footer.php'; ?>

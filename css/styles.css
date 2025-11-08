@@ -61,17 +61,18 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    justify-content: left;
     margin-top: 0; /* elimina el espacio superior */
     padding: auto;
     box-sizing: border-box;
     padding-left: 10px;
+    padding-right: 10px;
 }
 
 /* Tamaño > logo del condominio */
 .logo-container img {
     height: 60px;
     width: auto;
+    justify-content: center;;
 }
 
 .btn-home {
@@ -80,7 +81,7 @@ a:hover {
     background-image: url('../img/inicio.png'); /* Ruta de tu imagen */
     background-size: contain;       /* Ajusta la imagen dentro del botón */
     background-repeat: no-repeat;   /* Evita que se repita */
-    background-position: center;    /* Centra la imagen */
+    background-position: right;    /* posición de la imagen */
     border: none;                   /* Sin borde */
     cursor: pointer;                /* Cursor tipo mano */
     background-color: transparent;  /* Sin color de fondo */
@@ -130,16 +131,14 @@ input[type="submit"] {
 textarea {
     width: 100%;
     max-width: 400px;
-    height: 150px;
+    height: 100px;
     font-size: 16px;
-    padding: 20px;
+    padding: 10px;
     caret-color: black; /* cursor visible */
     border-radius: 5px;
     border: 1px solid #ccc;
     outline: none;
 }
-
-
 
 /* Estilo para el campo de texto correo/contraseña */
 .campo-login {
@@ -268,7 +267,6 @@ a.button {
     color: white;
     border-radius: 4px;
     margin-top: 10px;
-    margin-left: 10px;
     text-decoration: none;
 }
 
@@ -408,21 +406,26 @@ a.button-user:hover {
 /* Estilo de cada enlace */
 .enlace-item {
     background-color: #96bfd0;
-    padding: 5px 10px;
+    padding: 8px 10px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+    transition: 
+        background-color 0.3s ease,
+        transform 0.2s ease,  /* transición suave para el efecto de escala */
+        box-shadow 0.2s ease;
     text-align: center;
     width: 180px; /* ancho */
     min-width: 200px; /* Ancho mínimo para los enlaces */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    cursor: pointer;
     color: #030d18;
     font-size: 16px;
 }
 
 /* Efecto hover para los contenedores de enlaces */
 .enlace-item:hover {
-    background-color: #eaeaea;
+    background-color: #b8d7e5;
+    transform: scale(1.08);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
     text-decoration: none;
 }
 

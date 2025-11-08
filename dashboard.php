@@ -48,5 +48,5 @@ $rol = $_SESSION['rol'];
     </body>
     </div>
 </html>
-
+<br><br>
 <?php include 'includes/footer.php'; ?>

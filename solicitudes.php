@@ -157,7 +157,7 @@ $resultado = $stmt->get_result();
                             <button class="btn-responder">Responder</button>
                             <form method="POST" action="solicitudes.php" class="form-respuesta" style="display: none;">
                                 <input type="hidden" name="solicitud_id" value="<?php echo $solicitud['id']; ?>">
-                                <textarea name="respuesta" rows="3" cols="30" required></textarea><br>
+                                <br><textarea name="respuesta" id="mensaje" rows="3" cols="30" required placeholder="Escribe tu respuesta"></textarea><br><br>
                                 <input type="submit" value="Enviar Respuesta">
                             </form>
                         </td>
@@ -204,6 +204,23 @@ function closePopup() {
 }
 
 document.addEventListener('DOMContentLoaded', showPopup);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const botonesResponder = document.querySelectorAll('.btn-responder');
+
+    botonesResponder.forEach(boton => {
+        boton.addEventListener('click', function() {
+            const form = this.nextElementSibling; // el formulario está justo después del botón
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+                this.textContent = 'Cancelar';
+            } else {
+                form.style.display = 'none';
+                this.textContent = 'Responder';
+            }
+        });
+    });
+});
 </script>
     
 </body>
@@ -212,4 +229,5 @@ document.addEventListener('DOMContentLoaded', showPopup);
 $stmt->close();
 $conn->close();
 ?>
+<br><br><br><br><br>
 <?php include 'includes/footer.php'; ?>
