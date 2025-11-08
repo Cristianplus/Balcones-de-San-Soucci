@@ -127,7 +127,11 @@ $resultado = $stmt->get_result();
                 <th>Fecha</th>
                 <th>Respuesta</th>
                 <th>Fecha de Respuesta</th>
+                <?php if ($rol === 'administrador'): ?>
                 <th colspan="2">Acción</th>
+                    <?php else: ?>
+                <th>Acción</th>
+                    <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -161,8 +165,6 @@ $resultado = $stmt->get_result();
                                 <input type="submit" value="Enviar Respuesta">
                             </form>
                         </td>
-                    <?php else: ?>
-                        <td></td>
                     <?php endif; ?>
                     <td>
                         <form method="POST" action="solicitudes.php" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta solicitud?');">
